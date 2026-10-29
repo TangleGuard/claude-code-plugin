@@ -2,7 +2,8 @@
 name: architecture
 description: >-
   Inspect a codebase's real architecture — layers, packages, lines of code,
-  the package dependency graph, one block's full context (its layer, rules,
+  the package dependency graph, a saved view focused on one area, one
+  block's full context (its layer, rules,
   actual edges, and blast radius), and the evidence behind any dependency
   (the exact imports, file:line) — by querying the TangleGuard CLI instead of
   reading files and guessing. Use when orienting in an unfamiliar codebase,
@@ -36,7 +37,26 @@ tangleguard -q -l <language> [-p <path>] architecture
 Prints a compact summary: the layers, the allowed dependency rules, the
 packages (with their resolved layer and lines of code), and the package-level
 dependency graph. Run this first — one call instead of reading dozens of
-files.
+files. Add `--depth 1` (or 2, up to 4) to list each package's modules and
+their dependencies too.
+
+## Focus on one area (views)
+
+```bash
+tangleguard -q -l <language> [-p <path>] architecture --view "<name>"
+```
+
+The summary ends with a **Views** list. A view is a named slice of the
+codebase that the team saved in TangleGuard, such as one feature or domain
+("Authentication") or one subsystem ("Scanner Overview"), plus built-in ones:
+**Between packages** (only dependencies that cross package boundaries) and
+**Within packages** (only each package's internal dependencies). `--view`
+scopes the summary to that slice: its depth, opened and hidden parts, and
+which dependencies it shows. When the task is about an area a view covers,
+use the view instead of the whole summary: it is smaller and already focused
+on the parts the team considers relevant. An unknown name fails and lists the
+valid ones. Via the MCP server, pass the name as the `view` parameter of the
+`architecture` tool.
 
 ## Get one block's full context (before touching it)
 
