@@ -90,7 +90,12 @@ user's confirmation — rule changes are a human decision.
 tangleguard -q -l <language> [-p <path>] validate         # rule violations + cycles
 tangleguard -q -l <language> [-p <path>] validate-rules   # rule violations only
 tangleguard -q -l <language> [-p <path>] check-circles    # circular dependencies only
+tangleguard -q -l <language> [-p <path>] validate --since HEAD  # only what your change added
 ```
+
+In a codebase with existing violations, `validate --since HEAD` is the useful
+signal: it prints only the issues your uncommitted change introduced, and
+nothing when there are none.
 
 Violations come back with `file:line` evidence — open those locations and fix
 the code. Never edit `tangleguard.json` to make `validate` pass; rule changes
