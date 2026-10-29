@@ -1,0 +1,16 @@
+{
+  "description": "Architecture guardrail: when the agent finishes, report rule violations and cycles its changes introduced since HEAD.",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/guardrail.sh",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}

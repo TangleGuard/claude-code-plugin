@@ -7,7 +7,7 @@
     "email": "archwise-contact@mailbox.org"
   },
   "homepage": "https://tangleguard.com",
-  "repository": "https://github.com/TangleGuard/Agent-Skill",
+  "repository": "https://github.com/TangleGuard/claude-code-plugin",
   "license": "MIT",
   "keywords": [
     "architecture",
