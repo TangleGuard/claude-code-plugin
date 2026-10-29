@@ -17,7 +17,8 @@ directions: **preflight** before writing a change so violations never enter
 the codebase, and **validate** after a change to confirm nothing broke.
 
 The binary is `tangleguard`. If it is not on the PATH, ask the user to
-install it (`brew install --cask tangleguard-cli`, other options at
+install it (`curl -fsSL https://tangleguard.com/install.sh | sh` or
+`brew install --cask tangleguard-cli`, other options at
 https://tangleguard.com/apps/cli). Commands need the language (`-l`) and
 optionally a path (`-p`, defaults to the current directory); the config-only
 checks (`placement`, `check-dependency`) read `tangleguard.json` without

@@ -12,7 +12,8 @@ description: >-
 
 # Untangle: Break a Cycle with Evidence, Not Guesswork
 
-Requires `tangleguard` on the PATH (install: `brew install --cask
+Requires `tangleguard` on the PATH (install: `curl -fsSL
+https://tangleguard.com/install.sh | sh` or `brew install --cask
 tangleguard-cli`, see https://tangleguard.com/apps/cli). All commands take
 `-l <language>` and optionally `-p <path>`.
 

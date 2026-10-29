@@ -13,7 +13,8 @@ description: >-
 
 # Assign Layers: Map Components onto a Target Architecture
 
-Requires `tangleguard` on the PATH (install: `brew install --cask
+Requires `tangleguard` on the PATH (install: `curl -fsSL
+https://tangleguard.com/install.sh | sh` or `brew install --cask
 tangleguard-cli`, see https://tangleguard.com/apps/cli). Commands take
 `-l <language>` and optionally `-p <path>`.
 

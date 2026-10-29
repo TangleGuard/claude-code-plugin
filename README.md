@@ -7,13 +7,19 @@ A Claude Code plugin that keeps your coding agent inside your architecture, powe
 
 ## Requirements
 
-You need the TangleGuard CLI installed. The recommended way to install it is via [Homebrew](https://formulae.brew.sh/cask/tangleguard-cli):
+You need the TangleGuard CLI installed. On macOS and Linux, install it with one line:
+
+```bash
+curl -fsSL https://tangleguard.com/install.sh | sh
+```
+
+Or via [Homebrew](https://formulae.brew.sh/cask/tangleguard-cli):
 
 ```bash
 brew install --cask tangleguard-cli
 ```
 
-See the [documentation](https://tangleguard.com/apps/cli) for alternative installation methods.
+See the [documentation](https://tangleguard.com/docs/apps/cli) for Windows and other installation methods.
 
 ## Installation
 
