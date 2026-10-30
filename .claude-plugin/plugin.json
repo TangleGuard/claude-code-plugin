@@ -1,6 +1,6 @@
 {
   "name": "tangleguard",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Architecture guardrail for coding agents: inspect intended layers, packages and the dependency graph, and preflight every import against dependency rules and cycles via the TangleGuard CLI.",
   "author": {
     "name": "Archwise Solutions UG (haftungsbeschränkt)",
