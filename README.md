@@ -18,6 +18,10 @@ This repo is a Claude Code plugin and its own marketplace:
 /plugin install tangleguard@tangleguard
 ```
 
+## Privacy
+
+The skills and the hook run the TangleGuard CLI locally, your code never leaves your machine. The CLI sends one anonymous usage event per command to [OpenPanel](https://openpanel.dev): the command name, the CLI version, the operating system, and whether `validate --since` was used. This is necessary so know about the usage of the CLI. No code, file paths or user identifiers. The CLI command `tangleguard upload`, sends architecture data to TangleGuard Cloud (if the use has an account and provided an API token), but the plugin never runs the upload command.
+
 ## Other agents
 
 For any agent (and for humans), the guardrail check works as a git pre-commit hook. Save this as `.git/hooks/pre-commit` and make it executable:
