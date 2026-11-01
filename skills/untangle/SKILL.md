@@ -12,10 +12,10 @@ description: >-
 
 # Untangle: Break a Cycle with Evidence, Not Guesswork
 
-Requires `tangleguard` on the PATH (install: `curl -fsSL
-https://tangleguard.com/install.sh | sh` or `brew install --cask
-tangleguard-cli`, see https://tangleguard.com/apps/cli). All commands take
-`-l <language>` and optionally `-p <path>`.
+Requires `tangleguard` on the PATH. If it is not, ask the user to install it
+(`curl -fsSL https://tangleguard.com/install.sh | sh` or `brew install --cask
+tangleguard-cli`, other options at https://tangleguard.com/apps/cli). All
+commands take `-l <language>` and optionally `-p <path>`.
 
 ## Workflow
 
