@@ -14,8 +14,7 @@ description: >-
 # Assign Layers: Map Components onto a Target Architecture
 
 Requires `tangleguard` on the PATH. If it is not, ask the user to install it
-(`curl -fsSL https://tangleguard.com/install.sh | sh` or `brew install --cask
-tangleguard-cli`, other options at https://tangleguard.com/apps/cli).
+(see https://tangleguard.com/docs/apps/cli#installation).
 Commands take `-l <language>` and optionally `-p <path>`.
 
 ## The core principle: assign by role, not by fit

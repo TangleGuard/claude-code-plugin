@@ -20,9 +20,8 @@ cheaper in tokens, and grounded in facts rather than inference from file
 paths.
 
 The binary is `tangleguard`. If it is not on the PATH, ask the user to
-install it (`curl -fsSL https://tangleguard.com/install.sh | sh` or
-`brew install --cask tangleguard-cli`, other options at
-https://tangleguard.com/apps/cli) — do not fall back to guessing the
+install it (see https://tangleguard.com/docs/apps/cli#installation) — do
+not fall back to guessing the
 architecture. Commands need the language (`-l`) and optionally a path (`-p`,
 defaults to the current directory). Output is markdown, ready to drop into
 your reasoning; add `--format json` to parse it programmatically. Supported

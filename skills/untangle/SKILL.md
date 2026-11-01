@@ -13,8 +13,7 @@ description: >-
 # Untangle: Break a Cycle with Evidence, Not Guesswork
 
 Requires `tangleguard` on the PATH. If it is not, ask the user to install it
-(`curl -fsSL https://tangleguard.com/install.sh | sh` or `brew install --cask
-tangleguard-cli`, other options at https://tangleguard.com/apps/cli). All
+(see https://tangleguard.com/docs/apps/cli#installation). All
 commands take `-l <language>` and optionally `-p <path>`.
 
 ## Workflow
