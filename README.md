@@ -2,7 +2,7 @@
 
 A Claude Code plugin that keeps your coding agent inside your architecture, powered by [TangleGuard](https://tangleguard.com). It bundles:
 
-- **Skills** that teach the agent to query the codebase's real architecture (layers, packages, dependency graph) instead of guessing it from file paths — and to **preflight every import** with `check-import` before writing it, so dependencies that violate your rules or close a cycle never enter the codebase.
+- **Skills** that teach the agent to query the codebase's real architecture (layers, packages, dependency graph) instead of guessing it from file paths — and to **preflight every import** with `check-import` before writing it, so dependencies that violate your rules or close a cycle never enter the codebase. Before you commit, the `changes` skill shows you what the agent changed structurally — TangleGuard's own diff of the working tree against HEAD, verbatim, not the agent's summary of its work.
 - **A guardrail hook**: when the agent finishes a task, it runs `tangleguard validate --since HEAD` and hands any rule violation or cycle the change introduced back to the agent, with `file:line`. Pre-existing issues are ignored, and a clean change produces no output. [How it works](https://tangleguard.com/docs/getting-started/hooks).
 
 ## Requirements
@@ -31,4 +31,4 @@ For any agent (and for humans), the guardrail check works as a git pre-commit ho
 exec tangleguard -q validate --since HEAD
 ```
 
-The skills follow the [Agent Skills](https://agentskills.io) format — point your agent's skill loader at the [`skills/`](skills/) directory (`architecture`, `validate`, `untangle`, `assign-layers`), or copy it into your project's skills folder (e.g. `.claude/skills/`, `.codex/skills/`).
+The skills follow the [Agent Skills](https://agentskills.io) format — point your agent's skill loader at the [`skills/`](skills/) directory (`architecture`, `validate`, `changes`, `untangle`, `assign-layers`), or copy it into your project's skills folder (e.g. `.claude/skills/`, `.codex/skills/`).
