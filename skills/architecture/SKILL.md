@@ -8,7 +8,10 @@ description: >-
   (the exact imports, file:line) — by querying the TangleGuard CLI instead of
   reading files and guessing. Use when orienting in an unfamiliar codebase,
   when asked how the code is organized or what depends on what, and before
-  any architectural or design discussion.
+  any architectural or design discussion. Also when the user wants to see
+  the architecture themselves ("show me the graph", "visualize the
+  dependencies", "can I look at the structure"): write them the interactive
+  HTML page.
 ---
 
 # Architecture: Query the Structure, Don't Guess It
@@ -87,3 +90,22 @@ type-only import (cheap to move) or a broad runtime one. `--from`/`--to`
 accept `pkg::module` prefixes (the package segment may be omitted) or file
 paths; `--to` also accepts an external package name to list every usage of a
 third-party dependency.
+
+## When the user wants to see it
+
+```bash
+tangleguard -q -l <language> [-p <path>] scan --html
+```
+
+Writes the whole dependency graph as one self-contained, interactive HTML
+page — depth control, filters, the project's layers, rules and violations —
+to `.tangleguard/scan.html` in the repository and prints its `file://` path.
+Show that path so the user can open it; it works offline (`-o <file>` writes
+it elsewhere). The `.tangleguard/` folder ignores itself in git, so there is
+nothing to add to `.gitignore` and nothing to commit.
+
+The page is for the human. Do not open or read it yourself — it is several
+megabytes — and do not run plain `scan` for your own orientation either: it
+prints the raw graph as JSON. For your own reasoning use `architecture`,
+`context` and `explain-dependency` above; for a picture of what a change did,
+the `changes` skill has `changes --html`.

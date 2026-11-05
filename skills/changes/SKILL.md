@@ -7,7 +7,8 @@ description: >-
   paraphrase of its own work. Use after changing code and before the user
   commits, and whenever asked "what did you change structurally", "review the
   structural changes", "structural diff", "what did this touch
-  architecturally", or "show me the changes before I commit".
+  architecturally", "what does this branch change", or "show me the changes
+  before I commit".
 ---
 
 # Changes: Show the Structural Diff, Don't Paraphrase It
@@ -53,10 +54,26 @@ tangleguard -q -l <language> [-p <path>] changes --html
 
 Prints the same summary and writes one self-contained HTML page — the graph
 of the changed components and their neighbours, additions and removals
-coloured — then prints its `file://` path. Show that path so the user can
-open it; it works offline.
+coloured, the project's layers and rules included — then prints its
+`file://` path. Show that path so the user can open it; it works offline.
 
-## Branch against branch
+The page goes to `.tangleguard/changes.html` in the repository and is
+overwritten on every run (`-o <file>` writes it elsewhere). That folder
+ignores itself in git, so there is nothing to add to `.gitignore` and
+nothing to commit.
 
-`--base <ref> --head <ref>` compares two git refs instead of the working tree
-against HEAD, e.g. `changes --base main --head feature/x`.
+## A whole branch
+
+To show everything the current branch changes — all its commits plus the
+uncommitted work — compare it with the branch it will be merged into:
+
+```bash
+tangleguard -q -l <language> [-p <path>] changes --base main
+```
+
+The comparison starts at the commit where the branch forked from the base
+(the merge-base), like a pull request diff, so what the base gained in the
+meantime is not reported as removed. Add `--head <ref>` to compare a named
+ref instead of the working tree, e.g. `changes --base main --head feature/x`,
+or `--head HEAD` to leave uncommitted changes out. `--html` works with all
+of these.
