@@ -2,7 +2,8 @@
 name: architecture
 description: >-
   Inspect a codebase's real architecture — layers, packages, lines of code,
-  the package dependency graph, a saved view focused on one area, one
+  the package dependency graph, a saved view focused on one area (or save a
+  new one), one
   block's full context (its layer, rules,
   actual edges, and blast radius), and the evidence behind any dependency
   (the exact imports, file:line) — by querying the TangleGuard CLI instead of
@@ -60,6 +61,49 @@ use the view instead of the whole summary: it is smaller and already focused
 on the parts the team considers relevant. An unknown name fails and lists the
 valid ones. Via the MCP server, pass the name as the `view` parameter of the
 `architecture` tool.
+
+## Save a view
+
+Only when the user asks for one. There is no dedicated command: a view is an
+entry in the config's `views` list, so read the config, add the entry, and
+write it back.
+
+1. `tangleguard [-p <path>] read-config` prints the config as JSON.
+2. Add the view next to the layers and rules: the top-level `views`, or
+   `workspaces.<name>.views` if the config keeps its rules in workspace
+   sections. Leave every other field untouched.
+3. `tangleguard [-p <path>] write-config --config '<full merged JSON>'`
+4. Run `architecture --view "<name>"` and check it shows the slice you meant.
+
+```json
+{
+  "name": "Scanner internals",
+  "config": {
+    "depth": 1,
+    "deselectedNodes": [["cli"], ["desktop"]],
+    "expandedNodes": [["scanner", "rust"]],
+    "dependencyConfig": {
+      "crossPackages": true,
+      "local": true,
+      "deduplicateEdges": true,
+      "enableEdgePropagation": true
+    }
+  }
+}
+```
+
+- A node is a path: the package name, then the module's segments. Module
+  `rust::module_scanner` of package `scanner` in the `architecture --depth`
+  output is `["scanner", "rust", "module_scanner"]`.
+- `depth` works like `--depth` (0 = packages only). `expandedNodes` opens
+  single nodes beyond it.
+- `deselectedNodes` hides nodes with everything below them; the rest stays.
+  To focus on one area, hide what surrounds it.
+- `crossPackages` shows dependencies between packages, `local` those inside a
+  package. All four `dependencyConfig` flags are required. Optional:
+  `minLoc`, `maxLoc`, `showOnlyCircularDeps`.
+
+The TangleGuard UI lists the saved view too.
 
 ## Get one block's full context (before touching it)
 
