@@ -21,7 +21,7 @@ commands take `-l <language>` and optionally `-p <path>`.
 ### 1. Find the tangle
 
 ```bash
-tangleguard -q -l <language> check-circles
+tangleguard -q -l <language> check-circles --evidence
 ```
 
 Simple cycles (2 modules) list the edges directly. Tangles (3+ mutually
@@ -30,14 +30,26 @@ remove to dissolve the tangle — with the exact import statements behind each
 cut (`file:line` + statement) already inlined. That cut list is the
 refactoring plan; do not invent your own.
 
+`--evidence` appends **every edge inside each tangle** with its import
+statements, grouped by member → member. One call gives the whole picture, so
+don't run `explain-dependency` edge by edge. If the CLI rejects the flag, it is
+an older version: run without it and use `explain-dependency` for the edges
+you need.
+
 If the user pointed at a specific cycle or pair of modules, focus on that one.
 Otherwise fix the worst tangle first and confirm before continuing to others.
 
 ### 2. Weigh the cuts
 
 For each candidate edge, read the evidence — the imported items and the
-statements behind it (already in the cut list; for edges outside a tangle run
-`explain-dependency --from <a> --to <b>`). Cheap cuts first:
+statements behind it (already in the cut list and the `--evidence` section;
+for edges outside a tangle run `explain-dependency --from <a> --to <b>`).
+Look across edges too: when several members import the same symbol from one
+member, moving that symbol down often dissolves several cuts at once. The
+report lists these under **symbols to move**: shared symbols, and symbols that
+are the only thing behind an edge, ranked by loops broken. TangleGuard doesn't
+see what a symbol itself imports, so check its new home with
+`would-create-cycle` before moving it. Cheap cuts first:
 
 - **Type-only or single-item imports** — cheap: move the type/interface to a
   lower layer both sides may depend on.

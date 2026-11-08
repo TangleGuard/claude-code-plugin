@@ -32,6 +32,13 @@ your reasoning; add `--format json` to parse it programmatically. Supported
 languages include `rust`, `go`, `typescript` / `javascript`, `python`,
 `kotlin`, `java`, `csharp`, `php`, and `dart`.
 
+This skill covers reading the structure. The CLI can do more: cycle
+preflight, layer suggestions, structural diffs, and more. The `untangle`,
+`validate`, `assign-layers` and `changes` skills cover those. Before you
+conclude that TangleGuard can't answer something, or tell the user a feature
+is missing, run `tangleguard --help` once (`tangleguard <command> --help` for
+a command's options).
+
 ## Get the big picture
 
 ```bash
@@ -134,6 +141,10 @@ type-only import (cheap to move) or a broad runtime one. `--from`/`--to`
 accept `pkg::module` prefixes (the package segment may be omitted) or file
 paths; `--to` also accepts an external package name to list every usage of a
 third-party dependency.
+
+For a circular dependency, don't explain its edges one by one:
+`check-circles --evidence` lists every edge inside each tangle with its import
+statements in one call (see the untangle skill).
 
 ## When the user wants to see it
 
