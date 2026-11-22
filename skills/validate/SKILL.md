@@ -4,9 +4,10 @@ description: >-
   Architecture guardrail: preflight a change BEFORE making it — whether an
   import/dependency is allowed by the rules, whether it would create a
   circular dependency, where a piece of code belongs — and validate the
-  workspace after a change for rule violations and cycles. Use BEFORE adding
-  a dependency between modules, moving code between layers, or any structural
-  change, and AFTER such a change to confirm the architecture is still clean.
+  workspace for rule violations and cycles once the task is done. Use BEFORE
+  adding a dependency between modules, moving code between layers, or any
+  structural change, and ONCE when the whole task is finished (not after every
+  edit) to confirm the architecture is still clean.
 ---
 
 # Validate: Check Before You Change It
@@ -14,7 +15,7 @@ description: >-
 TangleGuard enforces the architecture declared in `tangleguard.json` (layers
 and dependency rules) and detects circular dependencies. Use it in both
 directions: **preflight** before writing a change so violations never enter
-the codebase, and **validate** after a change to confirm nothing broke.
+the codebase, and **validate** once the task is done to confirm nothing broke.
 
 The binary is `tangleguard`. If it is not on the PATH, ask the user to
 install it (see https://tangleguard.com/docs/apps/cli#installation).
@@ -84,7 +85,13 @@ for approval (they may rename layers), then apply it via `write-config` with
 the `--format json` output's `layers` and `rules`. Never apply it without the
 user's confirmation — rule changes are a human decision.
 
-## Validate (after the change)
+## Validate (once, when the task is done)
+
+Every validate scans the whole workspace. Run it once, after the last edit of
+the task, not after each edit: the per-edit check is the preflight above. If
+this skill came with the TangleGuard Claude Code plugin, its Stop hook already
+runs `validate --since HEAD` when you finish and hands you anything it finds,
+so don't run it yourself as well.
 
 ```bash
 tangleguard -q -l <language> [-p <path>] validate         # rule violations + cycles
@@ -109,5 +116,7 @@ walks through breaking it.
 2. Deciding where new code belongs → ask `placement`.
 3. About to add or change an import → run `check-import` with the two files;
    on DENIED pick a different design instead of adding the edge.
-4. Make the change.
-5. Run `validate` and fix anything it reports at the given `file:line`.
+4. Make the change. Repeat 1–4 for every change the task needs.
+5. When the whole task is done, run `validate --since HEAD` once (or let the
+   plugin's Stop hook do it) and fix anything it reports at the given
+   `file:line`.

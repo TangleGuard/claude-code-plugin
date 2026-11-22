@@ -20,7 +20,7 @@ This repo is a Claude Code plugin and its own marketplace:
 
 ## Privacy
 
-The skills and the hook run the TangleGuard CLI locally, and your code never leaves your machine. The CLI sends one anonymous usage event per command to [OpenPanel](https://openpanel.dev): the command name, the CLI version, the operating system, and whether `validate --since` was used. We need it to know how the CLI is used. No code, file paths or user identifiers are sent. The CLI command `tangleguard upload` sends architecture data to TangleGuard Cloud (if the user has an account and provided an API token), but the plugin never runs the upload command. Details are in our [privacy policy](https://tangleguard.com/legal/privacy-policy/en).
+The skills and the hook run the TangleGuard CLI locally, and your code never leaves your machine. The CLI sends one anonymous usage event per command to [OpenPanel](https://openpanel.dev): the command name, the CLI version, the operating system, whether `validate --since` was used, and whether the plugin's hook started the run. We need it to know how the CLI is used. No code, file paths or user identifiers are sent. The CLI command `tangleguard upload` sends architecture data to TangleGuard Cloud (if the user has an account and provided an API token), but the plugin never runs the upload command. Details are in our [privacy policy](https://tangleguard.com/legal/privacy-policy/en).
 
 ## Other agents
 

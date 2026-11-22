@@ -10,8 +10,16 @@ case "$input" in *'"stop_hook_active":true'* | *'"stop_hook_active": true'*) exi
 command -v tangleguard >/dev/null 2>&1 || exit 0
 # Not a repo, or nothing changed since HEAD: nothing to check.
 [ -n "$(git status --porcelain 2>/dev/null)" ] || exit 0
+# Same tree as the last check: nothing new to report. Stop fires every turn, so
+# without this a dirty tree re-scans (and re-reports) on every answer.
+state=$(git rev-parse --git-path tangleguard-hook)
+fp=$({ git rev-parse HEAD; git diff HEAD; git status --porcelain; git ls-files -o --exclude-standard | git hash-object --stdin-paths; } 2>/dev/null | cksum)
+[ "$fp" = "$(cat "$state" 2>/dev/null)" ] && exit 0
+printf '%s' "$fp" > "$state"
 
-findings=$(tangleguard -q validate --since HEAD 2>/dev/null)
+# TANGLEGUARD_SOURCE tells the CLI's usage event this run came from the hook,
+# not from an agent following the validate skill.
+findings=$(TANGLEGUARD_SOURCE=hook tangleguard -q validate --since HEAD 2>/dev/null)
 status=$?
 # 1 + output = new issues. Anything else (clean, scan error, a CLI too old for
 # --since, which argh also rejects with 1 but no stdout) stays quiet.
